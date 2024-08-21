@@ -5,30 +5,37 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./app:/home/app
+      - .:/app
     ports:
       - "4000:4000"
-    environment:
-      PGUSER: postgres
-      PGPASSWORD: postgres
-      PGHOST: db
-      PGPORT: 5432
+    env_file:
+      - shoe_phone.env
     depends_on:
-      - db
-    network_mode: "host"
+      db:
+        condition: service_healthy
 
   db:
     image: postgres
+    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    restart: always
+      POSTGRES_DB: shoe_phone_database
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-U", "postgres" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
   
 volumes:
   app:
   pgdata:
+    external: true
 
 networks:
   default:
+  
