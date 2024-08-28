@@ -13,7 +13,7 @@ defmodule ShoePhone.Repo.Migrations.CreateSmsMessages do
       add :to, :text, null: false
 
       add :status, :text, null: false
-      add :directon, :text, null: false
+      add :direction, :text, null: false
 
       timestamps(type: :utc_datetime_usec)
     end

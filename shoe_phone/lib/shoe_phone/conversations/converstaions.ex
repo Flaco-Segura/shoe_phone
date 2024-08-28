@@ -19,7 +19,7 @@ defmodule ShoePhone.Conversations do
   end
 
   def load_conversation_with(contact) do
-    messages = Query.SmsMessageStore.load_conversation_with(contact)
+    messages = Query.SmsMessageStore.load_messages_with(contact)
     %Schema.Conversation{contact: contact, messages: messages}
   end
 end

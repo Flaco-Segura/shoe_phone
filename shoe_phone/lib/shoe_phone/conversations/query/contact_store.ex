@@ -10,7 +10,7 @@ defmodule ShoePhone.Conversations.Query.ContactStore do
     contact_number =
       case direction do
         :incoming -> from
-        :outcoming -> to
+        :outgoing -> to
       end
 
     cs = Contact.changeset(%{phone_number: contact_number})
